@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <script type="text/javascript" src="js/lib/jquery.min.js"></script>
+  <style type="text/css" media="screen">
+    #map svg path.regions {
+      stroke: #fff;
+      fill: #cccccf;
+      fill-opacity: .7;
+    }
+  </style>
+</head>
+<body>
+  <div id="main" role="main">
+    <div id="view_selection" class="btn-group">
+      <a href="#" id="by-country" class="btn active">Area usage by country</a>
+      <a href="#" id="by-kind" class="btn">Area usage by kind</a>
+    </div>
+    <a href="#1990" class="year">1990</a>
+    <a href="#1995" class="year">1995</a>
+    <a href="#2000" class="year">2000</a>
+    <a href="#2005" class="year">2005</a>
+    <a href="#2010" class="year">2010</a>
+    <div id="map"></div>
+    <div id="vis"></div>
+  </div>
+  <script type="text/javascript" src="js/lib/raphael.min.js"></script>
+  <script src="js/lib/d3/d3.min.js"></script>
+  <script src="js/lib/d3/d3.layout.min.js"></script>
+  <script src="js/lib/d3/d3.geom.min.js"></script>
+  <script src="js/lib/kartograph.js"></script>
+  <script type="text/javascript" src="js/vis.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      var map, c, scale, updateMap, symbols = [];
+
+      c = $('#map');
+      c.height(c.width() * 0.5);
+
+      map = window.m = $K.map('#map');
+      map.loadMap('data/world.svg', function() {
+        map.addLayer({
+            id: 'regions',
+            key: 'iso3'
+        });
+      });
+      $('.year').click(function(e){
+        e.preventDefault();
+        change_year(parseInt($(this).attr('href').slice(1)));
+      })
+      $('#view_selection a').click(function(e) {
+        e.preventDefault();
+        var view_type = $(this).attr('id').split('-')[1];
+        $('#view_selection a').removeClass('active');
+        $(this).toggleClass('active');
+        toggle_view(view_type);
+        return false;
+      });
+    });
+  </script>
+</body>
+</html>
