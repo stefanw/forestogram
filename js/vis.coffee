@@ -173,7 +173,7 @@ class BubbleChart
         .attr("id", (d) -> "bubble_#{d.data.kind}_#{d.data.id}")
         .attr("class", (d) -> "part #{d.data.kind}")
     titles = @areas.append('title')
-    titles.text((d) -> "#{d.data.name}:  #{d.data.kindName}\n" + me.get_stats(d.data, d.data.values[me.year]))
+    titles.text((d) -> "#{d.data.name}: #{d.data.kindName}\n" + me.get_stats(d.data, d.data.values[me.year]))
     @areas = @vis.selectAll('.part')
 
     arc = d3.svg.arc().innerRadius(0)
